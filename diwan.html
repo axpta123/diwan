@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ديوان عادل للقصائد</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0d0f12 0%, #171a21 50%, #08090b 100%);
+            --card-bg: rgba(26, 30, 38, 0.75);
+            --border-color: rgba(212, 175, 55, 0.25);
+            --border-color-hover: rgba(212, 175, 55, 0.6);
+            --primary-gold: #d4af37;
+            --secondary-gold: #f3e5ab;
+            --text-main: #e6e6e6;
+            --text-muted: #9aa0a6;
+            --accent-red: #c0392b;
+            --header-bg: rgba(13, 15, 18, 0.85);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .light-mode {
+            --bg-gradient: linear-gradient(135deg, #f4efe6 0%, #e8decb 50%, #dfd3bd 100%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(160, 120, 40, 0.3);
+            --border-color-hover: rgba(160, 120, 40, 0.7);
+            --primary-gold: #8c6d1f;
+            --secondary-gold: #5c4713;
+            --text-main: #2c251e;
+            --text-muted: #6e655f;
+            --accent-red: #a93226;
+            --header-bg: rgba(244, 239, 230, 0.9);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            padding-bottom: 60px;
+        }
+
+        /* Canvas Background Animation */
+        #bedouin-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* Container & Grid */
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 15px;
+        }
+
+        /* Header Layout */
+        header {
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            position: relative;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--primary-gold);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-gold);
+            color: #0d0f12;
+            border-color: var(--primary-gold);
+        }
+
+        .btn-primary {
+            background: var(--primary-gold);
+            color: #0d0f12;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-gold);
+        }
+
+        .btn-danger {
+            background: rgba(192, 57, 43, 0.2);
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        .btn-danger:hover {
+            background: var(--accent-red);
+            color: #fff;
+        }
+
+        h1.site-title {
+            font-family: 'Amiri', serif;
+            font-size: 2.8rem;
+            color: var(--primary-gold);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            letter-spacing: 1px;
+        }
+
+        /* Navigation Tabs */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            border-color: var(--primary-gold);
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--primary-gold);
+        }
+
+        /* Sub Filters */
+        .sub-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .sub-tab {
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .sub-tab:hover, .sub-tab.active {
+            background: var(--primary-gold);
+            color: #0d0f12;
+            border-color: var(--primary-gold);
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 45px 14px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-gold);
+        }
+
+        /* Poems Grid */
+        .poems-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .poem-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            position: relative;
+        }
+
+        .poem-card:hover {
+            border-color: var(--border-color-hover);
+        }
+
+        .poem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .poem-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.6rem;
+            color: var(--primary-gold);
+        }
+
+        .poem-poet {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .poem-body {
+            font-family: 'Amiri', serif;
+            font-size: 1.35rem;
+            line-height: 2.2;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .verse-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 12px;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(212,175,55,0.1);
+        }
+
+        .verse-shatr {
+            flex: 1;
+            text-align: center;
+        }
+
+        .verse-shatr.sadr {
+            text-align: left;
+            padding-left: 10px;
+        }
+
+        .verse-shatr.ajuz {
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        .poem-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+            font-size: 0.85rem;
+        }
+
+        .poem-category {
+            background: rgba(212,175,55,0.1);
+            color: var(--primary-gold);
+            padding: 3px 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .poem-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-icon {
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .action-icon:hover, .action-icon.active {
+            color: var(--primary-gold);
+        }
+
+        /* Poets Grid */
+        .poets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .poet-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .poet-card h3 {
+            font-family: 'Amiri', serif;
+            color: var(--primary-gold);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            margin-top: 40px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .section-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .review-form {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(0,0,0,0.2);
+            color: var(--text-main);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .form-textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .review-item {
+            background: rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            position: relative;
+        }
+
+        .review-author {
+            font-weight: 700;
+            color: var(--primary-gold);
+            margin-bottom: 5px;
+        }
+
+        .review-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            float: left;
+        }
+
+        .review-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--header-bg);
+            border: 1px solid var(--primary-gold);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 550px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .modal-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            color: var(--primary-gold);
+        }
+
+        .close-modal {
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 600px) {
+            .verse-row {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center !important;
+            }
+            .verse-shatr {
+                text-align: center !important;
+                padding: 0 !important;
+            }
+            h1.site-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bedouin Canvas Background -->
+    <canvas id="bedouin-canvas"></canvas>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <button class="btn" id="theme-toggle-btn">
+                    <i class="fa-solid fa-moon"></i> المظهر
+                </button>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="add-poem-nav-btn" style="display: none;">
+                        <i class="fa-solid fa-plus"></i> إضافة قصيدة
+                    </button>
+                    <button class="btn" id="owner-login-btn">
+                        <i class="fa-solid fa-user-shield"></i> دخول المالك
+                    </button>
+                    <button class="btn btn-danger" id="owner-logout-btn" style="display: none;">
+                        <i class="fa-solid fa-right-from-bracket"></i> خروج
+                    </button>
+                </div>
+            </div>
+            <h1 class="site-title">ديوان عادل للقصائد</h1>
+        </header>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <button class="nav-tab active" data-tab="tweets">
+                <i class="fa-solid fa-feather"></i> التغريدات الشعرية
+            </button>
+            <button class="nav-tab" data-tab="prose">
+                <i class="fa-solid fa-scroll"></i> قصائد السرد
+            </button>
+            <button class="nav-tab" data-tab="poets">
+                <i class="fa-solid fa-users"></i> الشعراء المفضلون
+            </button>
+            <button class="nav-tab" data-tab="favorites">
+                <i class="fa-solid fa-bookmark"></i> المفضلة
+            </button>
+        </nav>
+
+        <!-- Sub Filters for Tweets / Prose -->
+        <div class="sub-nav" id="sub-filters">
+            <button class="sub-tab active" data-cat="all">الكل</button>
+            <button class="sub-tab" data-cat="ghazal">غزل وشوق</button>
+            <button class="sub-tab" data-cat="national">قصائد وطنية</button>
+            <button class="sub-tab" data-cat="praise">مدح وفخر</button>
+            <button class="sub-tab" data-cat="satire">هجاء</button>
+            <button class="sub-tab" data-cat="general">عامة وحكمة</button>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" class="search-input" id="search-input" placeholder="ابحث عن بيت، قصيدة، أو شاعر...">
+        </div>
+
+        <!-- Dynamic Content Container -->
+        <main id="content-area">
+            <div class="poems-grid" id="poems-list">
+                <!-- Poems dynamically inserted here -->
+            </div>
+        </main>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <h2 class="section-title">
+                <i class="fa-solid fa-comments"></i> آراء وانطباعات الزوار
+            </h2>
+            <form class="review-form" id="review-form">
+                <input type="text" class="form-input" id="reviewer-name" placeholder="اسمك الكريم" required>
+                <textarea class="form-textarea" id="reviewer-text" placeholder="اكتب رأيك أو انطباعك عن الديوان..." required></textarea>
+                <button type="submit" class="btn btn-primary" style="justify-self: start;">
+                    <i class="fa-solid fa-paper-plane"></i> إرسال الرأي
+                </button>
+            </form>
+
+            <div class="reviews-list" id="reviews-list">
+                <!-- Reviews inserted dynamically -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Owner Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">تسجيل دخول المالك</h3>
+                <i class="fa-solid fa-xmark close-modal" id="close-login-modal"></i>
+            </div>
+            <form id="owner-login-form">
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px;">اسم المستخدم</label>
+                    <input type="text" class="form-input" id="login-username" required>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display:block; margin-bottom:5px;">كلمة المرور</label>
+                    <input type="password" class="form-input" id="login-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">دخول</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Poem Modal -->
+    <div class="modal" id="poem-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="poem-modal-title">إضافة قصيدة جديدة</h3>
+                <i class="fa-solid fa-xmark close-modal" id="close-poem-modal"></i>
+            </div>
+            <form id="poem-form">
+                <input type="hidden" id="poem-edit-id">
+                <div style="margin-bottom: 12px;">
+                    <label style="display:block; margin-bottom:5px;">عنوان القصيدة</label>
+                    <input type="text" class="form-input" id="poem-title-input" required>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <label style="display:block; margin-bottom:5px;">اسم الشاعر</label>
+                    <input type="text" class="form-input" id="poem-poet-input" required>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <label style="display:block; margin-bottom:5px;">الغرض الشعري</label>
+                    <select class="form-input" id="poem-cat-input">
+                        <option value="ghazal">غزل وشوق</option>
+                        <option value="national">قصائد وطنية</option>
+                        <option value="praise">مدح وفخر</option>
+                        <option value="satire">هجاء</option>
+                        <option value="general">عامة وحكمة</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px;">الأبيات (افصل الصدر والعجز بـ | وضع كل بيت في سطر)</label>
+                    <textarea class="form-textarea" id="poem-verses-input" style="min-height: 150px;" placeholder="الصدر | العجز" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">حفظ القصيدة</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let isOwner = false;
+        let currentTab = 'tweets';
+        let currentSubCat = 'all';
+        let searchQuery = '';
+
+        // Initial Poems Data
+        const initialPoems = [
+            {
+                id: 1,
+                title: "من أعذب الشعر",
+                poet: "محمد بن فطيس",
+                category: "ghazal",
+                verses: [
+                    "ياشبه صفراء تذعرها الظلال | وياشبه عينا مهرة بالأولى",
+                    "عليك قلبي كل ما هب الشمال | يتل العروق الساكنات وتقتلى"
+                ],
+                favorites: false
+            },
+            {
+                id: 2,
+                title: "نجم البادية",
+                poet: "عبدالله بن زويبن",
+                category: "general",
+                verses: [
+                    "يزيد الصبر مع كبر الدعاوي | ويقوى العزم في وقت الشدايد",
+                    "ولا تشكي على غير السنافي | كريم النفس محمود العوايد"
+                ],
+                favorites: false
+            },
+            {
+                id: 3,
+                title: "وطن الشموخ",
+                poet: "رشيد الزلامي",
+                category: "national",
+                verses: [
+                    "دارنا دار العز والراية التلاد | يذرى بجالها كل مضهود ومجلي",
+                    "نذود عنها بالدم والروح والعتاد | وسلمان قائدنا على الخير ممتلي",
+                    "حمتها الشريعة والسيوف الشداد | ويا سعد من لليالي حمت به وظلي",
+                    "بلاد الوفاء والطيب في كل واد | صروح المجد فيها تعلت وعلي"
+                    
+                ],
+                favorites: false
+            }
+        ];
+
+        // Load LocalStorage
+        let poems = JSON.parse(localStorage.getItem('adel_poems')) || initialPoems;
+        let reviews = JSON.parse(localStorage.getItem('adel_reviews')) || [];
+        let favorites = JSON.parse(localStorage.getItem('adel_favs')) || [];
+
+        // Save State Helpers
+        function savePoems() { localStorage.setItem('adel_poems', JSON.stringify(poems)); }
+        function saveReviews() { localStorage.setItem('adel_reviews', JSON.stringify(reviews)); }
+        function saveFavs() { localStorage.setItem('adel_favs', JSON.stringify(favorites)); }
+
+        // DOM Elements
+        const poemsListEl = document.getElementById('poems-list');
+        const contentAreaEl = document.getElementById('content-area');
+        const searchInput = document.getElementById('search-input');
+        const ownerLoginBtn = document.getElementById('owner-login-btn');
+        const ownerLogoutBtn = document.getElementById('owner-logout-btn');
+        const addPoemNavBtn = document.getElementById('add-poem-nav-btn');
+        const loginModal = document.getElementById('login-modal');
+        const poemModal = document.getElementById('poem-modal');
+
+        // Navigation Tabs Handling
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentTab = tab.dataset.tab;
+                
+                const subFilters = document.getElementById('sub-filters');
+                if (currentTab === 'tweets' || currentTab === 'prose') {
+                    subFilters.style.display = 'flex';
+                } else {
+                    subFilters.style.display = 'none';
+                }
+                
+                render();
+            });
+        });
+
+        // Sub Category Filters
+        document.querySelectorAll('.sub-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentSubCat = tab.dataset.cat;
+                render();
+            });
+        });
+
+        // Search Input Listener
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim().toLowerCase();
+            render();
+        });
+
+        // Render Function
+        function render() {
+            if (currentTab === 'poets') {
+                renderPoets();
+                return;
+            }
+
+            contentAreaEl.innerHTML = `<div class="poems-grid" id="poems-list"></div>`;
+            const grid = document.getElementById('poems-list');
+
+            let filtered = poems.filter(poem => {
+                const count = poem.verses.length;
+                // Tweet (2-4 verses) vs Prose (5+ verses)
+                if (currentTab === 'tweets' && (count < 2 || count > 4)) return false;
+                if (currentTab === 'prose' && count <= 4) return false;
+                if (currentTab === 'favorites' && !favorites.includes(poem.id)) return false;
+
+                // Category filter
+                if ((currentTab === 'tweets' || currentTab === 'prose') && currentSubCat !== 'all') {
+                    if (poem.category !== currentSubCat) return false;
+                }
+
+                // Search query filter
+                if (searchQuery) {
+                    const matchTitle = poem.title.toLowerCase().includes(searchQuery);
+                    const matchPoet = poem.poet.toLowerCase().includes(searchQuery);
+                    const matchVerses = poem.verses.some(v => v.toLowerCase().includes(searchQuery));
+                    return matchTitle || matchPoet || matchVerses;
+                }
+
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="empty-state"><i class="fa-solid fa-scroll fa-2x" style="margin-bottom:10px;"></i><p>لا توجد قصائد مطابقة للعرض الحالي.</p></div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(poem => renderPoemCard(poem)).join('');
+        }
+
+        function renderPoemCard(poem) {
+            const isFav = favorites.includes(poem.id);
+            const categoryNames = {
+                ghazal: "غزل وشوق",
+                national: "قصائد وطنية",
+                praise: "مدح وفخر",
+                satire: "هجاء",
+                general: "عامة وحكمة"
+            };
+
+            const versesHTML = poem.verses.map(verse => {
+                const parts = verse.split('|');
+                const sadr = parts[0] ? parts[0].trim() : '';
+                const ajuz = parts[1] ? parts[1].trim() : '';
+                return `
+                    <div class="verse-row">
+                        <div class="verse-shatr sadr">${sadr}</div>
+                        <div class="verse-shatr ajuz">${ajuz}</div>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="poem-card" data-id="${poem.id}">
+                    <div class="poem-header">
+                        <h3 class="poem-title">${poem.title}</h3>
+                        <div class="poem-poet"><i class="fa-solid fa-user-pen"></i> ${poem.poet}</div>
+                    </div>
+                    <div class="poem-body">
+                        ${versesHTML}
+                    </div>
+                    <div class="poem-footer">
+                        <span class="poem-category">${categoryNames[poem.category] || 'عامة'}</span>
+                        <div class="poem-actions">
+                            <i class="fa-solid fa-volume-high action-icon" onclick="speakPoem(${poem.id})" title="استماع"></i>
+                            <i class="fa-solid fa-copy action-icon" onclick="copyPoem(${poem.id})" title="نسخ"></i>
+                            <i class="fa-solid fa-bookmark action-icon ${isFav ? 'active' : ''}" onclick="toggleFav(${poem.id})" title="حفظ بالمفضلة"></i>
+                            ${isOwner ? `
+                                <i class="fa-solid fa-pen-to-square action-icon" onclick="editPoem(${poem.id})" title="تعديل"></i>
+                                <i class="fa-solid fa-trash action-icon" style="color:var(--accent-red);" onclick="deletePoem(${poem.id})" title="حذف"></i>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Poets Grid
+        function renderPoets() {
+            const poetsMap = {};
+            poems.forEach(p => {
+                if (!poetsMap[p.poet]) poetsMap[p.poet] = 0;
+                poetsMap[p.poet]++;
+            });
+
+            const poets = Object.keys(poetsMap);
+            if (poets.length === 0) {
+                contentAreaEl.innerHTML = `<div class="empty-state"><p>لا يوجد شعراء في الديوان بعد.</p></div>`;
+                return;
+            }
+
+            contentAreaEl.innerHTML = `
+                <div class="poets-grid">
+                    ${poets.map(poet => `
+                        <div class="poet-card">
+                            <h3>${poet}</h3>
+                            <p style="color:var(--text-muted); font-size:0.9rem;">عدد القصائد: ${poetsMap[poet]}</p>
+                            <button class="btn" style="margin-top:15px; width:100%; justify-content:center;" onclick="filterByPoet('${poet}')">عرض الأبيات</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function filterByPoet(poetName) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-tab="tweets"]').classList.add('active');
+            currentTab = 'tweets';
+            searchQuery = poetName.toLowerCase();
+            searchInput.value = poetName;
+            render();
+        }
+
+        // Poem Actions
+        window.toggleFav = function(id) {
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(fId => fId !== id);
+            } else {
+                favorites.push(id);
+            }
+            saveFavs();
+            render();
+        };
+
+        window.copyPoem = function(id) {
+            const poem = poems.find(p => p.id === id);
+            if (!poem) return;
+            const text = `${poem.title}\nالشاعر: ${poem.poet}\n\n` + poem.verses.map(v => v.replace('|', ' --- ')).join('\n');
+            navigator.clipboard.writeText(text);
+            alert('تم نسخ القصيدة بنجاح!');
+        };
+
+        window.speakPoem = function(id) {
+            const poem = poems.find(p => p.id === id);
+            if (!poem) return;
+            window.speechSynthesis.cancel();
+            const text = poem.verses.map(v => v.replace('|', ' ')).join('. ');
+            const msg = new SpeechSynthesisUtterance(text);
+            msg.lang = 'ar-SA';
+            window.speechSynthesis.speak(msg);
+        };
+
+        // Owner Actions (Add/Edit/Delete)
+        window.deletePoem = function(id) {
+            if (!confirm('هل انت متأكد من حذف هذه القصيدة؟')) return;
+            poems = poems.filter(p => p.id !== id);
+            savePoems();
+            render();
+        };
+
+        window.editPoem = function(id) {
+            const poem = poems.find(p => p.id === id);
+            if (!poem) return;
+            document.getElementById('poem-edit-id').value = poem.id;
+            document.getElementById('poem-title-input').value = poem.title;
+            document.getElementById('poem-poet-input').value = poem.poet;
+            document.getElementById('poem-cat-input').value = poem.category;
+            document.getElementById('poem-verses-input').value = poem.verses.join('\n');
+            document.getElementById('poem-modal-title').innerText = "تعديل القصيدة";
+            poemModal.classList.add('active');
+        };
+
+        // Review Actions & Rendering
+        function renderReviews() {
+            const list = document.getElementById('reviews-list');
+            if (reviews.length === 0) {
+                list.innerHTML = `<p style="text-align:center; color:var(--text-muted); font-size:0.9rem;">كن أول من يشارك برأيه في الديوان!</p>`;
+                return;
+            }
+
+            list.innerHTML = reviews.map(rev => `
+                <div class="review-item">
+                    <span class="review-date">${rev.date}</span>
+                    <div class="review-author">${rev.name}</div>
+                    <div class="review-text">${rev.text}</div>
+                    ${isOwner ? `<i class="fa-solid fa-trash" style="position:absolute; left:15px; bottom:15px; color:var(--accent-red); cursor:pointer;" onclick="deleteReview(${rev.id})"></i>` : ''}
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('review-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('reviewer-name').value.trim();
+            const text = document.getElementById('reviewer-text').value.trim();
+            if (!name || !text) return;
+
+            const newRev = {
+                id: Date.now(),
+                name,
+                text,
+                date: new Date().toLocaleDateString('ar-SA')
+            };
+
+            reviews.unshift(newRev);
+            saveReviews();
+            renderReviews();
+
+            document.getElementById('reviewer-name').value = '';
+            document.getElementById('reviewer-text').value = '';
+        });
+
+        window.deleteReview = function(id) {
+            reviews = reviews.filter(r => r.id !== id);
+            saveReviews();
+            renderReviews();
+        };
+
+        // Modal Controls & Login Logic
+        ownerLoginBtn.addEventListener('click', () => loginModal.classList.add('active'));
+        document.getElementById('close-login-modal').addEventListener('click', () => loginModal.classList.remove('active'));
+        document.getElementById('close-poem-modal').addEventListener('click', () => poemModal.classList.remove('active'));
+
+        addPoemNavBtn.addEventListener('click', () => {
+            document.getElementById('poem-edit-id').value = '';
+            document.getElementById('poem-form').reset();
+            document.getElementById('poem-modal-title').innerText = "إضافة قصيدة جديدة";
+            poemModal.classList.add('active');
+        });
+
+        document.getElementById('owner-login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('login-username').value;
+            const p = document.getElementById('login-password').value;
+
+            if (u === 'Adel' && p === 'Aa12344321') {
+                isOwner = true;
+                loginModal.classList.remove('active');
+                ownerLoginBtn.style.display = 'none';
+                ownerLogoutBtn.style.display = 'inline-flex';
+                addPoemNavBtn.style.display = 'inline-flex';
+                document.getElementById('owner-login-form').reset();
+                render();
+                renderReviews();
+            } else {
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة!');
+            }
+        });
+
+        ownerLogoutBtn.addEventListener('click', () => {
+            isOwner = false;
+            ownerLoginBtn.style.display = 'inline-flex';
+            ownerLogoutBtn.style.display = 'none';
+            addPoemNavBtn.style.display = 'none';
+            render();
+            renderReviews();
+        });
+
+        document.getElementById('poem-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('poem-edit-id').value;
+            const title = document.getElementById('poem-title-input').value.trim();
+            const poet = document.getElementById('poem-poet-input').value.trim();
+            const category = document.getElementById('poem-cat-input').value;
+            const versesRaw = document.getElementById('poem-verses-input').value.trim().split('\n').filter(v => v.trim());
+
+            if (id) {
+                const idx = poems.findIndex(p => p.id == id);
+                if (idx !== -1) {
+                    poems[idx] = { ...poems[idx], title, poet, category, verses: versesRaw };
+                }
+            } else {
+                const newPoem = {
+                    id: Date.now(),
+                    title,
+                    poet,
+                    category,
+                    verses: versesRaw
+                };
+                poems.unshift(newPoem);
+            }
+
+            savePoems();
+            poemModal.classList.remove('active');
+            render();
+        });
+
+        // Theme Toggle
+        document.getElementById('theme-toggle-btn').addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+        });
+
+        // Canvas Background Animation Logic (Falcons, Tree & Stars)
+        const canvas = document.getElementById('bedouin-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Stars setup
+        const stars = Array.from({ length: 70 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height * 0.7,
+            radius: Math.random() * 1.5,
+            alpha: Math.random()
+        }));
+
+        // Falcons setup
+        const falcons = [
+            { x: -50, y: 100, speed: 1.2, scale: 0.6 },
+            { x: -200, y: 160, speed: 0.9, scale: 0.4 }
+        ];
+
+        function drawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Stars
+            ctx.fillStyle = '#ffffff';
+            stars.forEach(star => {
+                star.alpha += (Math.random() - 0.5) * 0.02;
+                if (star.alpha < 0.1) star.alpha = 0.1;
+                if (star.alpha > 1) star.alpha = 1;
+                ctx.globalAlpha = star.alpha;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+
+            // Falcons Flying Silhouette
+            falcons.forEach(falcon => {
+                falcon.x += falcon.speed;
+                if (falcon.x > canvas.width + 100) falcon.x = -100;
+
+                ctx.save();
+                ctx.translate(falcon.x, falcon.y);
+                ctx.scale(falcon.scale, falcon.scale);
+                ctx.fillStyle = 'rgba(212, 175, 55, 0.4)';
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.quadraticCurveTo(15, -15, 30, -5);
+                ctx.quadraticCurveTo(15, -5, 0, 10);
+                ctx.quadraticCurveTo(-15, -5, -30, -5);
+                ctx.quadraticCurveTo(-15, -15, 0, 0);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            requestAnimationFrame(drawCanvas);
+        }
+
+        // Init
+        drawCanvas();
+        render();
+        renderReviews();
+    </script>
+</body>
+</html>
